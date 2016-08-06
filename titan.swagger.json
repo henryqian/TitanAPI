@@ -1,0 +1,211 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Irdeto Titan API for ECMGProxy",
+        "description": "Irdeto Titan API for ECMGProxy, with Swagger 2.0",
+        "version": "1.0.0"
+    },
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/api/titan/v1/{accountid}",
+    "produces": [
+        "application/json",
+        "text/plain"
+    ],
+    "paths": {
+        "/SCSConnection": {
+            "get": {
+                "summary": "This will list all SCSConnections ",
+                "description": "This will list all all SCSConnections",
+                "tags": [
+                    "SCSConnection"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pagingOffset",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "name": "pagingLimit",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of SCSConnections",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SCSConnections"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "When authentication or authorization failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/CWProvision": {
+            "post": {
+                "summary": "Create a new CW_Provision object",
+                "description": "This will create a new CWProvisoin object.",
+                "tags": [
+                    "CWProvision"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CWProvision"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This returns a ECMResponse object.",
+                        "schema": {
+                            "$ref": "#/definitions/ECMResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "When authentication or authorization failed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "SCSConnections": {
+            "properties": {
+                "total": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "SCSConnnetion": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SCSConnection"
+                    }
+                }
+            }
+        },
+        "SCSConnection": {
+            "properties": {
+                "ECMIBorOOB": {
+                    "type": "string"
+                },
+                "NetworkID": {
+                    "type": "string"
+                },
+                "TransportID": {
+                    "type": "string"
+                },
+                "ECMGPort": {
+                    "type": "string"
+                },
+                "SCSHost": {
+                    "type": "string"
+                },
+                "CASystemID": {
+                    "type": "integer"
+                },
+                "RepetitionRate": {
+                    "type": "integer"
+                },
+                "DelayStart": {
+                    "type": "integer"
+                },
+                "DelayStop": {
+                    "type": "integer"
+                },
+                "CWsInAdvance": {
+                    "type": "integer"
+                },
+                "CWsPerMessage": {
+                    "type": "integer"
+                },
+                "TransportStreamPacketization": {
+                    "type": "integer"
+                },
+                "MinCPDuration": {
+                    "type": "integer"
+                },
+                "MaxCompTime": {
+                    "type": "integer"
+                }
+            }
+        },
+        "CWProvision": {
+            "properties": {
+                "CW_Provision": {
+                    "type": "string",
+                    "format": "byte"
+                }
+            }
+        },
+        "ECMResponse": {
+            "properties": {
+                "ECM_response": {
+                    "type": "string",
+                    "format": "byte"
+                }
+            }
+        }
+    }
+}
